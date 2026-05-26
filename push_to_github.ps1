@@ -72,19 +72,34 @@ if ($LASTEXITCODE -ne 0) {
 
 # 8. Push
 Write-Host "[INFO] Pushing to origin/$branch ..."
-try {
-    git push -u origin $branch
+git push -u origin $branch 2>&1 | Tee-Object -Variable pushOutput
+
+if ($LASTEXITCODE -eq 0) {
     Write-Host ""
     Write-Host "========================================"
     Write-Host " SUCCESS! Code pushed to:"
     Write-Host " $repoUrl"
     Write-Host "========================================"
-} catch {
-    Write-Host "[ERROR] Push failed. Common causes:"
-    Write-Host "  1. No write access to the repository."
-    Write-Host "  2. Remote repository does not exist yet."
-    Write-Host "  3. Authentication required (use Git Credential Manager or PAT)."
+} else {
     Write-Host ""
-    Write-Host "If the repo doesn't exist, create it first at:"
-    Write-Host " https://github.com/organizations/CPSDSC-Lab/repositories/new"
+    Write-Host "========================================"
+    Write-Host " PUSH FAILED"
+    Write-Host "========================================"
+    Write-Host ""
+    if ($pushOutput -match "403") {
+        Write-Host "[ERROR] HTTP 403 Forbidden"
+        Write-Host "Cause: Account 'CharlesQian-ai' lacks WRITE permission to this organization repo."
+        Write-Host ""
+        Write-Host "Solutions:"
+        Write-Host "  1. Ask admin to add 'CharlesQian-ai' as collaborator at:"
+        Write-Host "     https://github.com/CPSDSC-Lab/D3-REC/settings/access"
+        Write-Host ""
+        Write-Host "  2. Or run the fix script to switch account/token:"
+        Write-Host "     .\fix_github_auth.ps1"
+    } elseif ($pushOutput -match "404") {
+        Write-Host "[ERROR] Repository not found (404)."
+        Write-Host "Create it first at: https://github.com/organizations/CPSDSC-Lab/repositories/new"
+    } else {
+        Write-Host "[ERROR] Push failed. Output above."
+    }
 }

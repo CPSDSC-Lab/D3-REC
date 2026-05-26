@@ -1,6 +1,6 @@
 # D3-REC
 
-This repository contains the official inference code and evaluation scripts for our CVPR 2025 paper:
+This repository contains the inference code and evaluation scripts for our paper:
 
 > **Exploring Contextual Attribute Density in Referring Expression Counting**  
 > [arXiv:2503.12460](https://arxiv.org/abs/2503.12460)
@@ -77,17 +77,3 @@ Evaluation logic and loss functions are in `utils/`:
 - `utils/support_memory.py` — Adaptive threshold prior retrieval at inference time
 
 ---
-
-## Citation
-
-If you find this work useful for your research, please cite:
-
-```bibtex
-@inproceedings{wang2025exploring,
-  title={Exploring Contextual Attribute Density in Referring Expression Counting},
-  author={Wang, Zhicheng and Pan, Zhiyu and Peng, Zhan and Cheng, Jian and Xiao, Liwen and Jiang, Wei and Cao, Zhiguo},
-  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
-  pages={19587--19596},
-  year={2025}
-}
-```

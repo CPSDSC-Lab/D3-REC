@@ -1,4 +1,4 @@
-# CAD_GD-CVPR25
+# D3-REC
 (CVPR25) This repository is the official implementation of our Paper [Exploring Contextual Attribute Density in Referring Expression Counting](https://arxiv.org/abs/2503.12460)
 
 ## Installation

@@ -1,41 +1,88 @@
 # D3-REC
-(CVPR25) This repository is the official implementation of our Paper [Exploring Contextual Attribute Density in Referring Expression Counting](https://arxiv.org/abs/2503.12460)
+
+This repository contains the official inference code and evaluation scripts for our CVPR 2025 paper:
+
+> **Exploring Contextual Attribute Density in Referring Expression Counting**  
+> [arXiv:2503.12460](https://arxiv.org/abs/2503.12460)
+
+---
+
+## Overview
+
+D3-REC introduces three key modules for referring expression counting:
+
+- **ADM** (Attribute Decomposition Module): Token-level attribute classification + Slot Attention aggregation.
+- **DDG** (Dual-path Density Guidance): Context-aware density guidance with multi-scale learning.
+- **SDPR** (Stable Diffusion Prior Refinement): Diffusion prior density refinement with gated fusion.
+
+> **Note:** This release provides **inference and evaluation code** for reproducibility. Training scripts are excluded per review policy.
+
+---
 
 ## Installation
-Our code has been tested on Python 3.10 and PyTorch 2.4.0. 
+
+Our code has been tested on Python 3.10 and PyTorch 2.4.0.
 
 1. Install [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO).
-2. Install requirements.txt.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
 
 ## Data Preparation
-We train and evaluate our methods on REC8K and FSC-147 dataset. Please follow the REC8K and FSC-147 official repository to download and unzip the dataset.
 
-* [REC-8k](https://github.com/sydai/referring-expression-counting)
-* [FSC147](https://github.com/cvlab-stonybrook/LearningToCountEverything)
-* [FSC147-D](https://github.com/niki-amini-naieni/countx)
+We evaluate on **REC8K** and **FSC-147** datasets. Please follow the official repositories to download and unzip the datasets:
 
-*About the density map*: Fot the FSC-147, we use the density map of FSC-147 directly. For the Rec8k, we generate the density map using fixed kernel size, you can download the generated density maps from the [link](https://pan.baidu.com/s/10PjtyFNUpBuDdBun1SEINw?pwd=8wa3).
+- [REC-8k](https://github.com/sydai/referring-expression-counting)
+- [FSC147](https://github.com/cvlab-stonybrook/LearningToCountEverything)
+- [FSC147-D](https://github.com/niki-amini-naieni/countx)
+
+**Density maps:** For FSC-147, we use the official density maps directly. For REC8K, we generate density maps using a fixed kernel size. You can download the generated density maps from [this link](https://pan.baidu.com/s/10PjtyFNUpBuDdBun1SEINw?pwd=8wa3).
+
+---
 
 ## Inference
-You can run following command to conduct the inference on the REC-8k and FSC-147 dataset.
 
-```
+Run the following commands to perform inference on REC8K and FSC-147:
+
+```bash
 python test_rec.py
 python test_fsc.py
 ```
 
-## Training
-We use the pretrained model from GroundingDINO, please download the pretrained weight from [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO). Then you can run the following command to conduct the traininng on the REC-8k or FSC-147 dataset.
+---
 
-```
-python train_rec8k.py
-python train_fsc.py
-```
+## Core Modules
+
+Key model implementations are located under `GroundingDINO/groundingdino/models/GroundingDINO/`:
+
+| Module | File | Description |
+|--------|------|-------------|
+| ADM | `attribute_decomposition_module.py` | Attribute decomposition with Slot Attention |
+| DDG | `context_density_module.py` | Context-aware density guidance modules |
+| SDPR | `diffusion_density_refinement.py` | Diffusion prior refinement with gated fusion |
+| Dual-Head Regressor | `counter.py` | Joint category & attribute density regression |
+| Density-Aware Attention | `coutning_attention.py` | Spatial & channel attention from density maps |
+| Query Enhancement | `query_enhanced_module.py` | Dual-path linguistic query enhancement |
+| Main Model | `groundingdino_counting_guide.py` | Full model integrating ADM into forward pass |
+| Transformer Core | `transformer_counting_guide.py` | Transformer with DDG/ADM/SDPR integration |
+
+Evaluation logic and loss functions are in `utils/`:
+
+- `utils/tester_rec.py` — REC8K evaluation (dynamic threshold, Support Memory, HSV pre-filtering, Hungarian matching)
+- `utils/tester_fsc.py` — FSC-147 evaluation (density-guided fusion & top-k selection)
+- `utils/criterion.py` — Loss functions (`loss_adm`, `loss_attr_density`, `loss_sd_kl`, `loss_count_consistency`)
+- `utils/support_memory.py` — Adaptive threshold prior retrieval at inference time
+
+---
 
 ## Citation
-If you find this work or code useful for your research, please cite:
 
-```
+If you find this work useful for your research, please cite:
+
+```bibtex
 @inproceedings{wang2025exploring,
   title={Exploring Contextual Attribute Density in Referring Expression Counting},
   author={Wang, Zhicheng and Pan, Zhiyu and Peng, Zhan and Cheng, Jian and Xiao, Liwen and Jiang, Wei and Cao, Zhiguo},

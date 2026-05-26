@@ -3,11 +3,6 @@
 This repository contains the inference code and evaluation scripts for our paper:
 
 > **D3-REC: Decoupled Density Guidance with Attribute Decomposition and Diffusion Prior for Referring Expression Counting**
->
-> Cheng Qian, Jun Sang, Chunqiang Hu, Jiwu Cao
->
-> School of Big Data & Software Engineering, Chongqing University, China  
-> School of Electrical and Electronic Engineering, Nanyang Technological University, Singapore
 
 ---
 
@@ -48,7 +43,6 @@ We evaluate on **REC-8K** and **FSC-147** datasets. Please follow the official r
 
 - [REC-8k](https://github.com/sydai/referring-expression-counting)
 - [FSC147](https://github.com/cvlab-stonybrook/LearningToCountEverything)
-- [FSC147-D](https://github.com/niki-amini-naieni/countx)
 
 **Density maps:** For FSC-147, we use the official density maps directly. For REC8K, we generate density maps using a fixed kernel size. You can download the generated density maps from [this link](https://pan.baidu.com/s/10PjtyFNUpBuDdBun1SEINw?pwd=8wa3).
 
@@ -114,17 +108,4 @@ Evaluation logic and loss functions are in `utils/`:
 - **APDR** (Attribute Pair Discrimination Rate): Percentage of pairs where the predicted count relation matches ground truth
 - **ACR** (Attribute Confusion Rate): Complementary to APDR (`ACR = 100 - APDR`)
 
----
 
-## Citation
-
-If you find this work useful for your research, please cite:
-
-```bibtex
-@article{qian2025d3rec,
-  title={D3-REC: Decoupled Density Guidance with Attribute Decomposition and Diffusion Prior for Referring Expression Counting},
-  author={Qian, Cheng and Sang, Jun and Hu, Chunqiang and Cao, Jiwu},
-  journal={arXiv preprint arXiv:2503.12460},
-  year={2025}
-}
-```

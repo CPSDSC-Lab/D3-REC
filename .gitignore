@@ -1,0 +1,82 @@
+# === Training scripts (not needed for review) ===
+train_rec8k.py
+train_fsc.py
+utils/trainer_rec.py
+utils/trainer_fsc.py
+
+# === Temporary / scratch scripts ===
+tmp_make_attr_collage.py
+*.tmp
+
+# === Experiment outputs ===
+exp/
+tmp/
+
+# === Non-code directories ===
+thesis/
+IEEE/
+docs/
+
+# === Compiled Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# === IDE / Editor ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.claude/
+.codebuddy/
+
+# === Model weights & checkpoints ===
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# === Data & Datasets (should never be in repo) ===
+data/
+datasets/
+*.zip
+*.tar
+*.tar.gz
+
+# === LaTeX build artifacts ===
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.bbl
+*.blg
+
+# === PDFs (paper, except keep LICENSE if needed) ===
+*.pdf
+!LICENSE
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Jupyter / IPython ===
+.ipynb_checkpoints/
+*.ipynb
+
+# === Visualization outputs (often large) ===
+*.jpg
+*.jpeg
+*.png
+*.gif
+! GroundingDINO/groundingdino/util/*.png
+
+# === Other large binaries ===
+*.mp4
+*.avi
+*.mov
